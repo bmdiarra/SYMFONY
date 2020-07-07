@@ -1,0 +1,231 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chambre index{% endblock %}
+
+
+{% block stylesheets %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="{{ asset('css/listeretudiant.css')}}" rel="stylesheet">
+{{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+        <div class="container-xl">
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <div class="table-title bg-primary">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2>Enregistrer <b>Chambre</b></h2>
+          </div>
+          <div class="col-sm-6">
+                  <select type="text" class="form-control" name="first_name" placeholder="Profile" required="required">
+                  <option value="">Type Chambre</option>
+                  <option value="">Collectif</option>
+                  <option value="">Individuel</option>
+                </select>
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>
+              <span class="custom-checkbox">
+                <input type="checkbox" id="selectAll">
+                <label for="selectAll"></label>
+              </span>
+            </th>
+            <th>Numero Chambre</th>
+            <th>Numero Batiment</th>
+            <th>Type</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+    
+        {% for personne in chambres  %}
+          <tr>
+            <td>
+              <span class="custom-checkbox">
+                <input type="checkbox" id="checkbox1" name="options[]" value="{{personne.id}}">
+                <label for="checkbox1"></label>
+              </span>
+            </td>
+            <td>{{personne.numChambre}}</td>
+            <td>{{personne.numBatiment}}</td>
+            <td>{{personne.typeChambre}}</td>
+            <td>
+            
+              <a href="#editEmployeeModal"  class="edit modifi" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+
+              <a href="#deleteEmployeeModal"  class="delete _delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+            </td>
+          </tr>
+
+            {% endfor %}
+
+          <a href="{{ path('chambre_edit', {'id': chambre.id}) }}">edit</a>
+           
+        </tbody>
+      </table>
+      <div class="clearfix">
+        <div class="hint-text"> <b></b>  <b></b> </div>
+        <ul class="pagination">
+          <li class="page-item disabled"><a href="#">Previous</a></li>
+          <li class="page-item"><a href="#" class="page-link">1</a></li>
+          <li class="page-item"><a href="#" class="page-link">2</a></li>
+          <li class="page-item active"><a href="#" class="page-link">3</a></li>
+          <li class="page-item"><a href="#" class="page-link">4</a></li>
+          <li class="page-item"><a href="#" class="page-link">5</a></li>
+          <li class="page-item"><a href="#" class="page-link">Next</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>        
+</div>
+
+
+<!-- Edit Modal HTML -->
+<div id="editEmployeeModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">						
+					<h4 class="modal-title">Edit Employee</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">					
+        <div class="form-group">
+						<label>Id Chambre</label>
+						<input type="text" class="form-control" id="id_chambre" placeholder="" value="" readonly required>
+					</div>
+          <div class="form-group">
+						<label>Numero Chambre</label>
+						<input type="text" class="form-control" id="num_chambre" placeholder="" value="" readonly required>
+					</div>
+					<div class="form-group">
+						<label>Numero Batiment</label>
+						<input type="text" class="form-control" id="num_batiment" required>
+					</div>
+					
+					<div class="form-group">
+						<label>Type Chambre</label>
+						<input type="text" class="form-control" id="type_chambre" required>
+					</div>					
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+					<input type="submit" class="btn btn-info btn_save" value="Save">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Delete Modal HTML -->
+<div id="deleteEmployeeModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">						
+					<h4 class="modal-title">Delete Employee</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">					
+					<p>Are you sure you want to delete these Records?</p>
+					<p class="text-warning"><small>This action cannot be undone.</small></p>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+					<input type="submit" class="btn btn-danger confirm_delete" value="Delete">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+    
+    
+{#{% block javascripts %}
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=ExmkL1nQaawIQuwkP9JT0NiREbK228SvkHkNmRn4faKosix5UmplcKs1_fFQ1MV_VeCTJWAEbOT3EeH760r-0nzSPsv5mOyByKGafkCBHE0" charset="UTF-8"></script><script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    {{ parent() }}                           
+{% endblock %}#}
+
+
+    {# <a href="{{ path('chambre_new') }}">Create new</a> #}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{# {{ path('chambre_show', {'id': chambre.id}) }} #}
+{# {{ path('chambre_edit', {'id': chambre.id}) }} #}
+
+{# 
+    <h1>Chambre index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Num_chambre</th>
+                <th>Num_batiment</th>
+                <th>Type_chambre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chambre in chambres %}
+            <tr>
+                <td>{{ chambre.id }}</td>
+                <td>{{ chambre.numChambre }}</td>
+                <td>{{ chambre.numBatiment }}</td>
+                <td>{{ chambre.typeChambre }}</td>
+                <td>
+                     <a href="">show</a>
+                    <a href="{{ path('chambre_edit', {'id': chambre.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> #}
