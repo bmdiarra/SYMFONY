@@ -48,41 +48,51 @@
         </thead>
         <tbody>
     
-        {% for personne in chambres  %}
+        {% for chambre in chambres  %}
           <tr>
             <td>
               <span class="custom-checkbox">
-                <input type="checkbox" id="checkbox1" name="options[]" value="{{personne.id}}">
+                <input type="checkbox" id="checkbox1" name="options[]" value="{{chambre.id}}">
                 <label for="checkbox1"></label>
               </span>
             </td>
-            <td>{{personne.numChambre}}</td>
-            <td>{{personne.numBatiment}}</td>
-            <td>{{personne.typeChambre}}</td>
+            <td>{{chambre.numChambre}}</td>
+            <td>{{chambre.numBatiment}}</td>
+            <td>{{chambre.typeChambre}}</td>
             <td>
-            
-              <a href="#editEmployeeModal"  class="edit modifi" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+{#             
+              <a href="#editEmployeeModal"  class="edit modifi" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> #}
+              
+              <a href="{{ path('chambre_edit', {'id': chambre.id}) }}">Modifier</a>
 
-              <a href="#deleteEmployeeModal"  class="delete _delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+              {# <a href="#deleteEmployeeModal"  class="delete _delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> #}
+              <form method="post" action="{{ path('chambre_delete', {'id': chambre.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ chambre.id) }}">
+              <button class="btn">Delete</button>
+              </form>
+
             </td>
           </tr>
-
+              
             {% endfor %}
-
-          <a href="{{ path('chambre_edit', {'id': chambre.id}) }}">edit</a>
+            
+          
+          
            
         </tbody>
       </table>
       <div class="clearfix">
         <div class="hint-text"> <b></b>  <b></b> </div>
         <ul class="pagination">
-          <li class="page-item disabled"><a href="#">Previous</a></li>
+        {{ knp_pagination_render(chambres) }}
+          {# <li class="page-item disabled"><a href="#">Previous</a></li>
           <li class="page-item"><a href="#" class="page-link">1</a></li>
           <li class="page-item"><a href="#" class="page-link">2</a></li>
           <li class="page-item active"><a href="#" class="page-link">3</a></li>
           <li class="page-item"><a href="#" class="page-link">4</a></li>
           <li class="page-item"><a href="#" class="page-link">5</a></li>
-          <li class="page-item"><a href="#" class="page-link">Next</a></li>
+          <li class="page-item"><a href="#" class="page-link">Next</a></li> #}
         </ul>
       </div>
     </div>

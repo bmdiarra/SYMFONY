@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/chambre")
@@ -18,12 +19,31 @@ class ChambreController extends AbstractController
     /**
      * @Route("/", name="chambre_index", methods={"GET"})
      */
-    public function index(ChambreRepository $chambreRepository): Response
+    public function index(Request $request, PaginatorInterface $paginator) // Nous ajoutons les paramètres requis
     {
+        // Méthode findBy qui permet de récupérer les données avec des critères de filtre et de tri
+        $donnees = $this->getDoctrine()->getRepository(Chambre::class)->findBy([],['id' => 'desc']);
+
+        $chambres = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            2 // Nombre de résultats par page
+        );
+        
         return $this->render('chambre/index.html.twig', [
-            'chambres' => $chambreRepository->findAll(),
+            'chambres' => $chambres,
         ]);
     }
+
+    
+    
+    
+    //  public function index(ChambreRepository $chambreRepository): Response
+    // {
+    //     return $this->render('chambre/index.html.twig', [
+    //         'chambres' => $chambreRepository->findAll(),
+    //     ]);
+    // }
 
     /**
      * @Route("/new", name="chambre_new", methods={"GET","POST"})
@@ -71,6 +91,11 @@ class ChambreController extends AbstractController
 
             return $this->redirectToRoute('chambre_index');
         }
+
+        // return $this->render('chambre/index.html.twig#editEmployeeModal', [
+        //     'chambre' => $chambre,
+        //     'form' => $form->createView(),
+        // ]);
 
         return $this->render('chambre/edit.html.twig', [
             'chambre' => $chambre,

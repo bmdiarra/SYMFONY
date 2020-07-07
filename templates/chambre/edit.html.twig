@@ -1,13 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Chambre{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="{{ asset('css/listeretudiant.css')}}" rel="stylesheet">
+{{ parent() }}
+{% endblock %}
+
+{% block title %}Modification Chambre{% endblock %}
 
 {% block body %}
-    <h1>Edit Chambre</h1>
+    <h1>Modification Chambre</h1>
 
-    {{ include('chambre/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('chambre/_form.html.twig', {'button_label': 'Modidier'}) }}
 
-    <a href="{{ path('chambre_index') }}">back to list</a>
+    <a href="{{ path('chambre_index') }}">Annuler</a>
 
-    {{ include('chambre/_delete_form.html.twig') }}
+    {# {{ include('chambre/_delete_form.html.twig') }} #}
 {% endblock %}
