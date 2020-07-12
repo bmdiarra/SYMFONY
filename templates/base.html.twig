@@ -7,7 +7,7 @@
         <meta name="author" content="">
         
         <title>Simple Sidebar - Start Bootstrap Template</title>
-
+{% block stylesheets %}
         <!-- Bootstrap core CSS -->
         <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
@@ -17,10 +17,10 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         
 
-        {% block stylesheets %}{% endblock %}
+        {% endblock %}
     </head>
     <body>
-        <dcccciv class="container">
+        <div class="container">
               
 
   <div class="d-flex" id="wrapper">
@@ -64,7 +64,7 @@
             
 
             {% block javascripts %}
-            {% endblock %}
+            
             
                 <!-- Bootstrap core JavaScript -->
                 <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
@@ -77,6 +77,8 @@
                     $("#wrapper").toggleClass("toggled");
                     });
                 </script>  
+
+            {% endblock %}
      
         
     </body>

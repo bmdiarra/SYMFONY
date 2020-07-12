@@ -6,6 +6,7 @@ use App\Repository\EtudiantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+Use Symfony\Component\Validator\Constraints as Assert ;
 
 /**
  * @ORM\Entity(repositoryClass=EtudiantRepository::class)
@@ -21,41 +22,49 @@ class Etudiant
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Choisir")
      */
     private $matricule_etu;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Choisir")
      */
     private $nom_etu;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $prenom_etu;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $email_etu;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $telephone_etu;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $type_etu;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank
      */
     private $datenaiss_etu;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank
      */
     private $loger;
 

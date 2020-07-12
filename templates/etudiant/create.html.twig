@@ -1,13 +1,140 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}((parent)) New Voiture{% endblock %}
-
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block stylesheets %}
+  {{ parent() }}
+  <style>
+    .form-group{
+        
+    }
+  </style>
+{% endblock %}
 {% block body %}
-    <h1>Ajouter une voiture </h1>
-    {{ form_start(form)}}
+    <h1>Ajouter une Etudiant </h1>
+    {{ form_start(form,{'attr': {'id': 'form_etu_edit'}})}}
     <div class="form-group">
-        {{form_widget(form)}}
-        <input type="submit" value="Validez">
+        {{form_row(form.matricule_etu)}}
+
+        <div class="row">
+        <div class="col">
+          {{form_row(form.nom_etu)}}
+          
+        </div>
+        <div class="col">
+          {{form_row(form.prenom_etu)}}
+        </div>
+      </div>  
+
+      <div class="row">
+        <div class="col">
+          {{form_row(form.email_etu)}}
+          
+        </div>
+        <div class="col">
+          {{form_row(form.telephone_etu)}}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          {{form_row(form.type_etu)}}
+          
+        </div>
+        <div class="col">
+          {{form_row(form.datenaiss_etu)}}
+        </div>
+      </div>
+
+
+        <div class="row">
+        <div class="col" id="type_bourse">
+          
+          
+        </div>
+        <div class="col" id="type_logement">
+          
+        </div>
+      </div>  
+
+      <br/>
+      <div class="row">
+        <div class="col" id="">
+          
+          
+        </div>
+
+        <div class="col" id="numero_chambre">
+          
+          
+        </div>
+        
+      </div>
+        <input type="button" name="btn_etudiant_submit" id="btn_etudiant_submit" value="Validez" Formnovalidate>
     </div>
     {{ form_end(form)}}
 {% endblock %}
+
+{% block javascripts %}
+            {{ parent() }}
+      <script src="{{ asset('js/ajax.js')}}"></script>
+            <script>
+$(function(){
+ 
+
+$("#etudiant_type_etu").change(function(){
+    
+   $etat_bourse = $("#etudiant_type_etu").val();
+   
+   if($etat_bourse == "1"){
+    $( "#type_bourse" ).html( `` );
+    $( "#type_logement" ).html( `` );
+    $( "#type_bourse" ).html( `
+    <select type="text" class="form-control" name="type_bourse" id="valeur_bourse" placeholder="Profile" required="required">
+              <option value="">Valeur de la bourse</option>
+              <option value="40000">Bourse entiere</option>
+              <option value="20000">Demi bourse</option>
+            </select>
+    ` );
+
+    $( "#type_logement" ).html( `
+    <select type="text" class="form-control" name="loger" id="loger" placeholder="Profile" required="required">
+              <option value="">Choisissez le type de logement</option>
+              <option value="loger">Loger</option>
+              <option value="nonloger">Non loger</option>
+            </select>
+    ` );
+   }
+   if($etat_bourse == "2"){
+    $( "#type_bourse" ).html( `` );
+    $( "#type_logement" ).html( `` );
+    $( "#numero_chambre" ).html( ``);
+    $( "#type_bourse" ).html( `
+    <div class="col"><input type="text" class="form-control" name="adresse_etu" id="adresse_etu" placeholder="Adresse" required="required"></div>
+    ` );
+   }
+
+
+   
+ $("#loger").change(function(){
+  $choisir_logement = $("#loger").val();
+  if($choisir_logement == "loger"){
+    $( "#numero_chambre" ).html( `
+          <div class="col"><input type="text" class="form-control" name="id_chambre" id="id_chambre" placeholder="Numero chambre" required="required"></div>
+          ` );
+  }
+  if($choisir_logement == "nonloger"){
+    $( "#numero_chambre" ).html( ``);
+    
+  }
+        
+  })
+})
+
+
+});
+
+
+            </script>
+
+            {% endblock %}
